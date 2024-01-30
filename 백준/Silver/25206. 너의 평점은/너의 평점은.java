@@ -12,6 +12,8 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		double sum = 0;
 		double totalSum = 0;
+		String gradeList[] = {"A+", "A0", "B+", "B0", "C+", "C0", "D+", "D0", "F", "P"};
+		 double gradeScore[] = {4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.0, 0.0};
 		
 		for(int i=0; i<20; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -21,45 +23,10 @@ public class Main {
 			
 			if(!grade.equals("P")) sum += module;
 			
-			double gradescore = 0;
-			
-			switch(grade) {
-			case("A+"): 
-				gradescore = 4.5;
-				totalSum += module * gradescore;
-				break;
-			case("A0"): 
-				gradescore = 4.0;
-				totalSum += module * gradescore;	
-				break;
-			case("B+"): 
-				gradescore = 3.5;
-				totalSum += module * gradescore;	
-				break;
-			case("B0"): 
-				gradescore = 3.0;
-				totalSum += module * gradescore;
-				break;
-			case("C+"): 
-				gradescore = 2.5;
-				totalSum += module * gradescore;
-				break;
-			case("C0"): 
-				gradescore = 2.0;
-				totalSum += module * gradescore;
-				break;
-			case("D+"): 
-				gradescore = 1.5;
-				totalSum += module * gradescore;
-				break;
-			case("D0"): 
-				gradescore = 1.0;
-				totalSum += module * gradescore;
-				break;
-			case("F"): 
-				gradescore = 0.0;
-				totalSum += module * gradescore;
-				break;
+			for(int j=0; j<gradeList.length; j++) {
+				if(grade.equals(gradeList[j])) {
+					totalSum += module * gradeScore[j];
+				}
 			}
 			
 		}
