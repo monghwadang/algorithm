@@ -7,39 +7,44 @@ import java.util.StringTokenizer;
 
 public class Main {
 	
+	static class User {
+		int age;
+		String name;
+		
+		public User(int age, String name) {
+			this.age = age;
+			this.name = name;
+		}
+	}
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
 		
-		String[][] user = new String[N][2];
+		User[] user = new User[N];
 		
-		for(int r=0; r<user.length; r++) { // 회원에 대한 Nx2 문자열 배열 만들기
+		for(int r=0; r<user.length; r++) {
 			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-			for(int c=0; c<user[r].length; c++) {
-				user[r][c] = st.nextToken();
-
-			}
+			
+			user[r] = new User(Integer.parseInt(st.nextToken()), st.nextToken());
 		}
 		
-		Arrays.sort(user, new Comparator<String[]>() {
-			@Override
-			public int compare(String[] o1, String[] o2) {
-				if(o1[0].equals(o2[0])) {
-					return 0;
-				} else {
-					return Integer.parseInt(o1[0]) - Integer.parseInt(o2[0]); // 양수이면 swap 음수이면 그대로
-				}
+		Arrays.sort(user, new Comparator<User>() {
 
+			@Override
+			public int compare(User o1, User o2) {
+				if(o1.age == o2.age) {
+					return 0;
+				}
+				
+				return o1.age - o2.age;
 			}
 		});
 		
 
 		for(int r=0; r<user.length; r++) {
-			for(int c=0; c<user[r].length; c++) {
-				System.out.print(user[r][c] + " ");
-			}
-			System.out.println();
+			System.out.println(user[r].age + " " + user[r].name);
 		}
 	}
 
