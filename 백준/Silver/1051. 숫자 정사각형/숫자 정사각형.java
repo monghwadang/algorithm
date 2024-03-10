@@ -40,8 +40,8 @@ public class Main {
 		for (int c = b; c < M; c++) {
 			if (square[a][c] == square[a][b]) {
 				int r = a + c - b;
-
 				int size = 0;
+				
 				if (r<N && square[r][b] == square[a][b] && square[r][c] == square[a][c]) {
 					size = (r - a + 1) * (c - b + 1);
 				}
