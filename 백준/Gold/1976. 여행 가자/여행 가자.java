@@ -12,7 +12,6 @@ public class Main {
 	static int[][] conn;
 	static int[] plan;
 	static int[] p;
-	static int[] cnt;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 
