@@ -28,7 +28,7 @@ public class Main {
 		}
 
 		Arrays.sort(alphabet);
-		
+
 		combi(0, 0);
 		System.out.println(sb);
 
@@ -37,12 +37,9 @@ public class Main {
 	private static void combi(int idx, int sidx) {
 
 		if (sidx == L) { // 4개의 암호가 완성
-			
+
 			if (check()) {
-				for (int i = 0; i < pw.length; i++) {
-					sb.append(pw[i]);
-				}
-				sb.append('\n');
+				sb.append(pw).append('\n');
 			}
 			return;
 		}
@@ -54,21 +51,19 @@ public class Main {
 	}
 
 	private static boolean check() {
-		
+
 		int vCount = 0;
 		int cCount = 0;
 
-		char[] aeiou = { 'a', 'e', 'i', 'o', 'u' };
-		
-		for(char c : pw) {
-			if(new String(aeiou).indexOf(c)!=-1) {
+		for (char c : pw) {
+			if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
 				vCount++;
 			} else {
 				cCount++;
 			}
 		}
 
-		return vCount>=1 && cCount>=2;
+		return vCount >= 1 && cCount >= 2;
 	}
 
 }
