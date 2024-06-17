@@ -18,21 +18,16 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		input();
-		group(0, 0);
+		group(0, 0, 0);
 		System.out.println(cnt);
 
 	}
 
-	private static void group(int idx, int sidx) {
+	private static void group(int idx, int sidx, int somCnt) {
 
 		if (sidx == 7) { // 7명이 뽑혔다
 
-			pick = new boolean[5][5];
-			for (int i = 0; i < 7; i++) {
-				pick[sel[i] / 5][sel[i] % 5] = true;
-			}
-
-			if (check()) {
+			if (somCnt>=4 && check()) {
 				cnt++;
 			}
 
@@ -41,12 +36,17 @@ public class Main {
 
 		for (int i = idx; i <= 25 - 7 + sidx; i++) {
 			sel[sidx] = i;
-			group(i + 1, sidx + 1);
+			group(i + 1, sidx + 1, somCnt + (princess[i / 5][i % 5] == 'S' ? 1 : 0));
 		}
 
 	}
 
 	private static boolean check() {
+		
+		pick = new boolean[5][5];
+		for (int i = 0; i < 7; i++) {
+			pick[sel[i] / 5][sel[i] % 5] = true;
+		}
 
 		visited = new boolean[5][5];
 
@@ -74,7 +74,7 @@ public class Main {
 		for (int r = 0; r < 5; r++) {
 			for (int c = 0; c < 5; c++) {
 				if (pick[r][c]) { // 여기서 한 번에 연결되어있어야 해
-					connect = dfs(r, c);
+					connect = bfs(r, c);
 					break;
 
 				}
@@ -85,22 +85,25 @@ public class Main {
 		return connect;
 	}
 
-	private static int dfs(int r, int c) {
-
+	private static int bfs(int r, int c) {
+		Queue<Point> q = new LinkedList<>();
+		q.add(new Point(r, c));
 		visited[r][c] = true;
 		int connect = 1;
 
-		for (int d = 0; d < 4; d++) {
-			int nr = r + dr[d];
-			int nc = c + dc[d];
-
-			if (checkRange(nr, nc) && pick[nr][nc] && !visited[nr][nc]) {
-				connect += dfs(nr, nc);
+		while (!q.isEmpty()) {
+			Point curr = q.poll();
+			for (int d = 0; d < 4; d++) {
+				int nr = curr.x + dr[d];
+				int nc = curr.y + dc[d];
+				if (checkRange(nr, nc) && pick[nr][nc] && !visited[nr][nc]) {
+					visited[nr][nc] = true;
+					q.add(new Point(nr, nc));
+					connect++;
+				}
 			}
 		}
-
 		return connect;
-
 	}
 
 	private static boolean checkRange(int nr, int nc) {
