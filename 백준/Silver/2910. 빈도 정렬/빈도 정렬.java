@@ -29,8 +29,8 @@ class frequency implements Comparable<frequency> {
 	@Override
 	public int compareTo(frequency o) {
 
-		if (this.cnt == o.cnt) {
-			return this.idx - o.idx;
+		if (this.cnt == o.cnt) { // 등장 횟수가 같다면
+			return this.idx - o.idx; // 먼저 등장한 것이 앞에 오도록
 		}
 		return o.cnt - this.cnt;
 	}
@@ -57,33 +57,33 @@ public class Main {
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < N; i++) {
 
-			msg(Integer.parseInt(st.nextToken()), i);
+			msg(Integer.parseInt(st.nextToken()), i); // map 채우기
 
 		}
 
+		// 정렬을 위해 list에 넣기
 		list.addAll(map.values());
 		Collections.sort(list);
-		
+
 		decode();
 
 	}
 
 	private static void msg(int n, int idx) {
 
-		if (map.containsKey(n)) { // n이 이미 등장한 적 있다면
-			frequency curr = map.get(n);
-			curr.cnt++;
-
-		} else { // n이 새로 등장
+		frequency curr = map.get(n);
+		if (curr == null) { // n이 새로 등장
 			map.put(n, new frequency(n, idx, 1));
+		} else { // 이미 등장한 적 있다면
+			curr.cnt++;
 		}
 
 	}
 
 	private static void decode() {
 
-		for(frequency f : list) {
-			for(int i=0; i<f.cnt; i++) {
+		for (frequency f : list) { // 각 n에 대해서
+			for (int i = 0; i < f.cnt; i++) { // 등장 횟수만큼 출력
 				sb.append(f.n + " ");
 			}
 		}
